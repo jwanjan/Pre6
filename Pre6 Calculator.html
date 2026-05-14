@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة معدل التفاضل | Dr.OmarKenjo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cairo', 'Tahoma', 'Segoe UI', Arial, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            background: #111;
+            border-radius: 40px;
+            margin-bottom: 25px;
+            color: white;
+            border: 1px solid #2a2a2a;
+        }
+        .header h1 { 
+            font-size: 2.2em; 
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+        .header h1 span { 
+            color: #ffffff; 
+        }
+        .header p { 
+            opacity: 0.8; 
+            color: #ffffff;
+        }
+        .logo {
+            font-size: 14px;
+            background: rgba(255,255,255,0.1);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 50px;
+            margin-top: 15px;
+            color: #ffffff;
+        }
+        .calculator {
+            max-width: 550px;
+            margin: 0 auto;
+            background: #111;
+            border-radius: 30px;
+            padding: 25px;
+            border: 1px solid #2a2a2a;
+        }
+        .calc-title {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2a2a2a;
+            color: #ffffff;
+        }
+        .calc-title h2 {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .field { 
+            margin-bottom: 20px; 
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            font-size: 16px;
+            text-align: center;
+            color: white;
+            font-family: 'Cairo', 'Tahoma', sans-serif;
+            transition: 0.3s;
+        }
+        input:focus { 
+            outline: none; 
+            border-color: #ffffff;
+            background: #222;
+        }
+        input::placeholder {
+            color: #555;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            font-family: 'Cairo', 'Tahoma', sans-serif;
+        }
+        button:hover {
+            background: #e0e0e0;
+            transform: scale(1.02);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 20px;
+            text-align: center;
+            display: none;
+            border: 1px solid #333;
+        }
+        .result.show { 
+            display: block; 
+        }
+        .result div:first-child {
+            font-size: 1.1em;
+            color: #cccccc;
+            margin-bottom: 10px;
+        }
+        .final-score { 
+            font-size: 48px; 
+            font-weight: 800; 
+            color: #ffffff; 
+            letter-spacing: 2px;
+        }
+        .show-calculation {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .show-calculation label {
+            display: inline-block;
+            cursor: pointer;
+            color: #cccccc;
+            font-size: 14px;
+        }
+        .show-calculation input {
+            width: auto;
+            margin-right: 8px;
+            transform: scale(1.1);
+            vertical-align: middle;
+        }
+        .calculation-details {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #aaaaaa;
+            display: none;
+        }
+        .calculation-details.show {
+            display: block;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding: 15px;
+            color: #888;
+            font-size: 13px;
+        }
+        .footer .name {
+            font-family: monospace;
+            font-size: 14px;
+            color: #ffffff;
+        }
+        @media (max-width: 500px) {
+            .header h1 { font-size: 1.6em; }
+            .calculator { padding: 20px; }
+            .final-score { font-size: 36px; }
+            button { font-size: 18px; }
+            .calc-title h2 { font-size: 1.3em; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="header">
+        <h1><span> حاسبة معدل التفاضل</span></h1>
+    </div>
+
+    <div class="calculator">
+        <div class="calc-title">
+            <h2>ツ أدخل درجاتك </h2>
+        </div>
+        
+        <div class="field">
+            <label> معدل الخمس سنوات</label>
+            <input type="number" id="yearsGrade" placeholder="من 0 إلى 100" step="any" min="0" max="100">
+        </div>
+        
+        <div class="field">
+            <label> معدل المقابلات</label>
+            <input type="number" id="interviewGrade" placeholder="من 0 إلى 30" step="any" min="0" max="30">
+        </div>
+        
+        <div class="field">
+            <label> معدل الوطني</label>
+            <input type="number" id="clusterGrade" placeholder="من 0 إلى 100" step="any" min="0" max="100">
+        </div>
+        
+        <button onclick="calculateFinal()">احسب النتيجة النهائية</button>
+        
+        <div class="result" id="resultBox">
+            <div>🎓 نتيجتك النهائية</div>
+            <div class="final-score" id="finalScore">0</div>
+            
+            <div class="show-calculation">
+                <input type="checkbox" id="showCalculationCheckbox" onclick="toggleCalculation()">
+                <label for="showCalculationCheckbox">📊 إظهار العملية الحسابية</label>
+            </div>
+            <div id="calculationDetails" class="calculation-details"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span class="name">Created By: Dr.OmarKenjo</span>
+    </div>
+
+    <script>
+        let lastYears = 0, lastInterview = 0, lastCluster = 0;
+        let lastInterviewAdjusted = 0;
+        
+        function calculateFinal() {
+            let years = parseFloat(document.getElementById('yearsGrade').value);
+            let interview = parseFloat(document.getElementById('interviewGrade').value);
+            let cluster = parseFloat(document.getElementById('clusterGrade').value);
+            
+            if (isNaN(years) || years < 0 || years > 100) {
+                alert("❌ أدخل معدل الخمس سنوات (0-100)");
+                return;
+            }
+            if (isNaN(interview) || interview < 0 || interview > 30) {
+                alert("❌ أدخل معدل المقابلات (0-30)");
+                return;
+            }
+            if (isNaN(cluster) || cluster < 0 || cluster > 100) {
+                alert("❌ أدخل معدل الوطني (0-100)");
+                return;
+            }
+            
+            // حفظ القيم للاستخدام في toggleCalculation
+            lastYears = years;
+            lastInterview = interview;
+            lastCluster = cluster;
+            
+            // معادلة المقابلات: (القيمة × 10) ÷ 3
+            lastInterviewAdjusted = (interview * 10) / 3;
+            
+            // الحساب النهائي: الخمس سنوات 50% + المقابلات المعدلة 3% + الوطني 47%
+            let finalResult = (years * 0.50) + (lastInterviewAdjusted * 0.03) + (cluster * 0.47);
+            finalResult = Math.round(finalResult * 100) / 100;
+            
+            document.getElementById('finalScore').innerHTML = finalResult + " / 100";
+            
+            // تحديث تفاصيل العملية الحسابية
+            updateCalculationDetails();
+            
+            // إظهار صندوق النتيجة
+            document.getElementById('resultBox').classList.add('show');
+        }
+        
+        function updateCalculationDetails() {
+            let detailsDiv = document.getElementById('calculationDetails');
+            let yearsCalc = (lastYears * 0.50).toFixed(2);
+            let interviewCalc = (lastInterviewAdjusted * 0.03).toFixed(2);
+            let clusterCalc = (lastCluster * 0.47).toFixed(2);
+            let finalResult = (lastYears * 0.50) + (lastInterviewAdjusted * 0.03) + (lastCluster * 0.47);
+            finalResult = Math.round(finalResult * 100) / 100;
+            
+            detailsDiv.innerHTML = `
+                 تفاصيل العملية الحسابية:<br>
+                • معدل الخمس سنوات: ${lastYears} × 50% = ${yearsCalc}<br>
+                • معدل المقابلات: (${lastInterview} × 10 ÷ 3 = ${lastInterviewAdjusted.toFixed(2)}) × 3% = ${interviewCalc}<br>
+                • معدل الوطني: ${lastCluster} × 47% = ${clusterCalc}<br>
+                <strong>• المجموع النهائي: ${yearsCalc} + ${interviewCalc} + ${clusterCalc} = ${finalResult}</strong>
+            `;
+        }
+        
+        function toggleCalculation() {
+            let checkbox = document.getElementById('showCalculationCheckbox');
+            let detailsDiv = document.getElementById('calculationDetails');
+            
+            if (checkbox.checked) {
+                detailsDiv.classList.add('show');
+                updateCalculationDetails();
+            } else {
+                detailsDiv.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
